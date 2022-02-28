@@ -10,12 +10,12 @@ A second version of the dataset has been created in azure where the masks have b
 
 ### Stats
 Number of files: 12047  
+| # Training Images | 10675 |  
+| - | - |
+| Positive | 2379 |
+| Negative | 8296 |
 
-Number of training images: 10675  
-  Positive: 2379   
-  Negative: 8296  
-  
-  
-Number of testing images: 1372  
-  Positive: 290  
-  Negative: 1082  
+| # Testing Images | 1372 |  
+| - | - |
+| Positive | 290 |
+| Negative | 1082 |
