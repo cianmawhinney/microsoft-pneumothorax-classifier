@@ -76,9 +76,12 @@
       </div>
     </div>
 
-    <script> src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-      crossorigin="anonymous"
+      crossorigin="anonymous"></script>
+    
+
+      <script>
       
       /**
        * IMPORTANT: Weird bug here, the below function only works when the above Bootstrap decleration is after <script>
@@ -87,23 +90,19 @@
     
 
 
-      var det = Boolean(false);                       // this will eventually be a boolean with the result from the ML model 
+      var det = Boolean(true);                       // this will eventually be a boolean with the result from the ML model 
       var link = document.getElementById("change");   
-
-      let conf = 97.22;
 
       function changeFunc()                           // this decides the screen to display depending on results
       {
         if (det)
         {
           link.href = "positive.html";
-          det = false;
         }
 
         else
         {
           link.href = "negative.html";
-          det = true;
         }
       }
     </script>
