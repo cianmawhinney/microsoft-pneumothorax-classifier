@@ -1,14 +1,27 @@
-.container {
-  position: relative;
-  text-align: center;
-  color: white;
-}
-
-.body {
+html, body {
   height: 100%;
   margin: 0;
 }
 
+.container {
+  height: 100%;
+  position: relative;
+  text-align: center;
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1 0 auto;
+}
+
+.footer {
+  flex-shrink: 0;
+}
+
+/*
 .welcome {
   min-height: 100%;
   padding: 20px;
@@ -30,3 +43,4 @@
   height: 40px;
   margin-top: 0px;
 }
+*/
