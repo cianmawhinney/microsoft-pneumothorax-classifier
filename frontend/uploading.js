@@ -5,7 +5,7 @@ for (let i = 0; i < images.files.length; i++) {
 }
 
 fetch('https://wherever.it.goes/newData', {
-    method = 'POST',
+    method: 'POST',
     body: data,
 })
 .then(response => response.json())

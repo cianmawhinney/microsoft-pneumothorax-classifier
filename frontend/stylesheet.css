@@ -1,0 +1,32 @@
+.container {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.body {
+  height: 100%;
+  margin: 0;
+}
+
+.welcome {
+  min-height: 100%;
+  padding: 20px;
+  padding-bottom: 550px;
+}
+
+.middle {
+  height: 100px;
+  text-align: center;
+}
+
+.form {
+  height: 70px;
+  margin-top: -200px;
+}
+
+.footer {
+  padding-left: 20px;
+  height: 40px;
+  margin-top: 0px;
+}
