@@ -6,14 +6,13 @@ async function uploadImage() {
   const images = document.getElementById('customFile');
   // const images = document.querySelector('input[type="file"][multiple]');
   for (let i = 0; i < images.files.length; i++) {
-    data.append('img_${i}', images.files[i]);
+    data.append('image', images.files[i]);
   }
   
   await fetch(endpointURL, {
     method: 'POST',
     body: data,
     headers: {
-      'Content-Type': 'application/json',
       'Authorization': `Bearer ${apiKey}`,
     },
   })

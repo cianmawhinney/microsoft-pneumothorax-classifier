@@ -3,6 +3,12 @@
 import os
 import tensorflow as tf
 
+from azureml.contrib.services.aml_request import AMLRequest, rawhttp
+from azureml.contrib.services.aml_response import AMLResponse
+from PIL import Image
+import json
+
+# Based on https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-advanced-entry-script#binary-data
 
 def init():
     global model
@@ -12,9 +18,21 @@ def init():
     model = tf.keras.models.load_model(model_folder)
     print(model)
 
+@rawhttp
+def run(request):
+    print(request)
 
-def run(raw_data):
-    print(raw_data)
+    if request.method == 'POST':
+        file_bytes = request.files["image"]
+        image = Image.open(file_bytes).convert('RGB')
+        # For a real-world solution, you would load the data from reqBody
+        # and send it to the model. Then return the response.
+
+        # For demonstration purposes, this example just returns the size of the image as the response.
+        return AMLResponse(json.dumps(image.size), 200)
+    else:
+        return AMLResponse("Bad Request", 500)
+    
 
     # need to work out the format of the data coming into the function (could be in PIL format or a
     # raw PNG maybe?)
