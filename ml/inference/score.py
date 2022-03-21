@@ -2,6 +2,7 @@
 
 import os
 import tensorflow as tf
+import numpy as np
 
 from azureml.contrib.services.aml_request import AMLRequest, rawhttp
 from azureml.contrib.services.aml_response import AMLResponse
@@ -25,11 +26,15 @@ def run(request):
     if request.method == 'POST':
         file_bytes = request.files["image"]
         image = Image.open(file_bytes).convert('RGB')
-        # For a real-world solution, you would load the data from reqBody
-        # and send it to the model. Then return the response.
 
-        # For demonstration purposes, this example just returns the size of the image as the response.
-        return AMLResponse(json.dumps(image.size), 200)
+        new_image_size = (512, 512)
+        image = image.resize(new_image_size)
+        image_data = tf.keras.preprocessing.image.img_to_array(image)
+        
+        image_data = image_data.reshape(1, 512, 512, 3)
+
+        predictions = model.predict(image_data).tolist()
+        return AMLResponse(json.dumps(predictions), 200)
     else:
         return AMLResponse("Bad Request", 500)
     
