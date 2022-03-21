@@ -19,3 +19,12 @@ Number of files: 12047
 | - | - |
 | Positive | 290 |
 | Negative | 1082 |
+
+#### Model Results
+| # Name                         | # Loss | # Accuracy | # Recall | # Precision |
+| VGG No Augmentation Fine Tuning| 0.3922 | 0.8393 | 0.6512 | 0.608 |
+| VGG with augmentation          | 0.4554 | 0.7902 | 0? (not sure why) | 0 |
+| VGG no augmentation            | 0.3866 | 0.84   | 0.3936 | 0.7167 |
+| VGG with augmentation and fine tuning | 0.3629 | 0.84 | 0.4036 | 0.7019 | 
+| EfficientNet with augmentation | 1.1644 | 0.7909 | N/A | N/A| 
+| EfficientNet no augmentation    | 0.509 | 0.8229 | N/A | N/A|
