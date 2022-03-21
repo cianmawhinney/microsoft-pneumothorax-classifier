@@ -22,6 +22,7 @@ Number of files: 12047
 
 #### Model Results
 | # Name                          | # Loss | # Accuracy | # Recall | # Precision |
+| - | - | - | - | - |
 | VGG No Augmentation Fine Tuning | 0.3922 | 0.8393 | 0.6512 | 0.608 |
 | VGG with augmentation           | 0.4554 | 0.7902 | 0? (not sure why) | 0 |
 | VGG no augmentation             | 0.3866 | 0.84   | 0.3936 | 0.7167 |
