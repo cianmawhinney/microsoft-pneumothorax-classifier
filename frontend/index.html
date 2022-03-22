@@ -19,7 +19,7 @@
         <div class="form">
           <label class="form-label" for="customFile">Please submit a file</label>
           <input type="file" class="form-control bg-dark text-white" id="customFile" />
-          <a class="btn btn-primary" href="#" onclick="uploadImage()" id="change">Submit</a>
+          <a class="btn btn-primary" href="results.html" onclick="uploadImage()" id="change">Submit</a>
         </div>
       </div>
 
@@ -38,21 +38,21 @@
     </div>
 
     <script>
-      var det = Boolean(true);                       // this will eventually be a boolean with the result from the ML model 
-      var link = document.getElementById("change");   
+      // var det = Boolean(true);                       // this will eventually be a boolean with the result from the ML model 
+      // var link = document.getElementById("change");   
 
-      function changeFunc()                           // this decides the screen to display depending on results
-      {
-        if (det)
-        {
-          link.href = "positive.html";
-        }
+      // function changeFunc()                           // this decides the screen to display depending on results
+      // {
+      //   if (det)
+      //   {
+      //     link.href = "positive.html";
+      //   }
 
-        else
-        {
-          link.href = "negative.html";
-        }
-      }
+      //   else
+      //   {
+      //     link.href = "negative.html";
+      //   }
+      // }
     </script>
     <script src="uploading.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.js" integrity="sha256-htsAUOIgN8xkootpQUzmvaCbQo6x2PNMTD7kLWI6yYQ=" crossorigin="anonymous"></script>
