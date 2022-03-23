@@ -1,4 +1,5 @@
 async function uploadImage() {
+  submittedUI();
   const endpointURL = "https://pneumothorax.mawh.in/score"
   const apiKey = "LDzXDtJKHklAX2uhlDHRdbf5DRcTgXYf";
 
@@ -23,4 +24,9 @@ async function uploadImage() {
   .catch(error => {
     console.error('Error:', error);
   });
+}
+
+function submittedUI() {
+  $(".main-content").hide()
+  $(".image-results").css("display", "flex")
 }
