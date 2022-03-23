@@ -1,7 +1,6 @@
 """Script run by an Azure endpoint to the make predictions on images using the model"""
 
 import os
-from tkinter import image_names
 import tensorflow as tf
 import numpy as np
 
