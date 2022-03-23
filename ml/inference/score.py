@@ -1,6 +1,7 @@
 """Script run by an Azure endpoint to the make predictions on images using the model"""
 
 import os
+from tkinter import image_names
 import tensorflow as tf
 import numpy as np
 
@@ -20,6 +21,7 @@ def init():
     print('Model loaded')
     print(model)
 
+
 @rawhttp
 def run(request):
     print(request)
@@ -35,6 +37,7 @@ def run(request):
         image = image.resize(new_image_size)
         image_data = tf.keras.preprocessing.image.img_to_array(image)
         image_data = image_data.reshape(1, 512, 512, 3)
+        image_data /= 255
 
         # return the predictions based on the model
         predictions = model.predict(image_data).tolist()
