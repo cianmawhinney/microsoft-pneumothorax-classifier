@@ -57,6 +57,18 @@ function goPrev()
   //   prevHidden = true;
   // }       
 
+  // if (detectedArray[imageIndex] == true)               // if there is PNEUMOTHORAX detected in new image, we say that
+  // {
+  //    'detect'.innerHTML = "DETECTED"; 
+  // }
+
+  // else
+  // {
+  //   'detect'.innerHTML = "NOT DETECTED";              // if not in new image we do opposite
+  // }
+
+  // let accurate = accuracyArray[imageIndex];
+  // 'accuracy'.innerHTML
 
   // if (nextHidden && imageArray.length > 1)              // if next is hidden and we will now need it again after going back one image
   // {
