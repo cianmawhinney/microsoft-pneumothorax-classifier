@@ -1,19 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
   <head>
     <meta charset="UTF-8">
-    <title>Pneumothorax Classifier</title>
+    <title>Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="stylesheet.css" rel="stylesheet">
   </head>
-  <body class="bg-dark">
-    <div class="container pt-5 pb-5">
-        <div class="row header">
-          <div class="col">
-            <h1>Welcome to the Pneumothorax Detection Software</h1>
-          </div>
+
+  <body class="d-flex h-100 text-center text-white bg-dark">
+    
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+      <header class="mb-auto">
+        <div>
+          <h3 class="float-md-start mb-0">Pneumothorax Classifier</h3>
+          <nav class="nav nav-masthead justify-content-center float-md-end">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link" href="about.html">About</a>
+          </nav>
         </div>
+      </header>
 
         <div class="row mt-5 image-results">
           <div class="col">
@@ -42,11 +48,11 @@
           </div>
         </div>
         
-        <div class="row align-items-center main-content">
+        <div class="px-3 row align-items-center main-content">
           <div class="col"></div>
           <div class="col-5">
             <img class="output" width="400" />	
-            <label class="form-label" for="customFile">Please submit a file</label>
+            <label class="lead" for="customFile">Please submit a file</label>
             <input type="file" accept="image/png, image/dcim" onchange="loadFile(event)" class="form-control bg-dark text-white mb-3 file_upload" id="customFile" />
             <a class="btn btn-primary form-control" href="#" onclick="uploadImage()" id="change">Submit</a>
           </div>
@@ -55,17 +61,8 @@
 
         <div class="row footer-container">
           <div class="col">
-            <footer class="footer">
-              <p>
-                Created by: 
-                <a href="https://github.com/cianmawhinney/">Cian Mawhinney</a>, 
-                <a href="https://github.com/mangledbottles">Dermot O'Brien</a>,
-                <a href="https://github.com/EmmetMcD">Emmet McDonald</a>, 
-                <a href="https://github.com/KennethHarmon">Kenneth Harmon</a>, 
-                <a href="https://github.com/elliot-lyons">Elliot Lyons</a>,
-                <a href="https://github.com/j-wilsons">Jacob Sharpe</a>,
-                <a href="https://github.com/pakulyta">AJ Pakulyte</a>
-              </p>
+            <footer class="mt-auto text-white-50">
+              <p>Pneumothorax Classifier - Group 24</p>
             </footer>
           </div>
         </div>
