@@ -30,10 +30,16 @@ function submittedUI() {
   $(".main-content").hide()
   $(".image-results").css("display", "flex")
 
-  // if (imageArray.length < 2)                     // if there's not a batch of images, no need to display prev and next buttons
+  let prevHidden = new Boolean(true);
+  let nextHidden = new Boolean(false);
+  let current = 0;
+
+  // if (results.length < 2)                     // if there's not a batch of images, no need to display prev and next buttons
   // {
   //   $(".prev-button").hide();
   //   $(".next-button").hide();
+  //   nextHidden = true;
+  //   
   // }
 }
 
@@ -43,58 +49,67 @@ function goHome()             // add all these into 'app.js'?
   $(".main-content").css("display", "flex");
 };
 
-function goPrev()
+function goPrev()               // NEED TO DECLARE VARIABLE 'current' SOMEWHERE EVERYTIME IMAGE UPLOADED (declare to 0)
 {
-  // if (imageIndex > 0)           // should be somewhat like this?
+  // if (current > 0)           // should be somewhat like this?
   // {
-  //   imageIndex--;
-  //   display image at index imageIndex;
+  //   current--;
+    updateResults();
   // }
 
-  // if (imageIndex == 0)         // if there's no need for a prev button
+  // if (current === 0)         // if there's no need for a prev button
   // {
-    $(".prev-button").hide();
-  //   prevHidden = true;
-  // }       
-
-  // if (detectedArray[imageIndex] == true)               // if there is PNEUMOTHORAX detected in new image, we say that
+     document.getElementById("goPrev").disabled = true;
+     prevHidden = true;
+  // }
+  
+  // if (nextHidden && results.length > 1)              // if next is hidden and we will now need it again after going back one image
   // {
-  //    'detect'.innerHTML = "DETECTED"; 
+      document.getElementById("goNext").disabled = false;
+      nextHidden = false;
   // }
 
-  // else
-  // {
-  //   'detect'.innerHTML = "NOT DETECTED";              // if not in new image we do opposite
-  // }
-
-  // let accurate = accuracyArray[imageIndex];
-  // 'accuracy'.innerHTML
-
-  // if (nextHidden && imageArray.length > 1)              // if next is hidden and we will now need it again after going back one image
-  // {
-  //   $(".next-button").css("display", "flex");
-  //   nextHidden = false;
-  // }
+  updateResults();
 };
 
 function goNext()                 // functions are more or less the same as in goPrev, just flipped to cater for the opposite as such
 {
-  // if (imageIndex > imageArray.length)          
+  // if (current < results.length)          
   // {
-  //   imageIndex++;
-  //   display image at index imageIndex;
+  //   current++;
+      updateResults();
   // }
 
-  // if (imageIndex == (imageArray.length - 1))
+  // if (current === (results.length - 1))
   // {
-    $(".next-button").hide();
-  //   nextHidden = true;
+    document.getElementById("goNext").disabled = true;
+    nextHidden = true;
   // }       
 
 
-  // if (prevHidden && imageArray.length > 1)
+  // if (prevHidden && results.length > 1)
   // {
-  //   $(".prev-button").css("display", "flex");
-  //   prevHidden = false;
+    document.getElementById("goPrev").disabled = false;
+     prevHidden = false;
   // }
+};
+
+function updateResults()              // changes the results being outputted currently on screen due to change in image
+{
+  // if (results[current].pneumothoraxDetected)               // if there is PNEUMOTHORAX detected in new image, we say that
+  // {
+  //    document.getElementById("detect").innerHTML = "DETECTED"; 
+  //    document.getElementById("advice").innerHTML = "We recommend this image is reviewed by a medical professionnal before action is taken."
+  // }
+
+  // else
+  // {
+  //    document.getElementById("detect").innerHTML = "NOT DETECTED";              // if not in new image we do opposite
+  //    document.getElementById("advice").innerHTML = "We don't recommend this image is reviewed by a medical professionnal at this time."
+  // }
+
+  // let accurate = results[current].confidence;
+  // document.getElementById("accuracy").innerHTML = "This has been calculated with a " + accurate + " accuracy";
+
+  // document.getElementById("image-results").src = NEW SOURCE?
 };

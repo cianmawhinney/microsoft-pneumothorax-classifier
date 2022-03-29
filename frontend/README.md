@@ -1,1 +1,1 @@
-The front end is split into two parts. Elliot will be working on the UI which will be created using Bootstrap.
+This folder contains the UI for the project. It is made using HTML, JS and CSS. We also used Bootstrap to help with presentation.

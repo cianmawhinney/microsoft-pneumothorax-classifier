@@ -15,7 +15,7 @@
           </div>
         </div>
 
-        <div class="row mt-5 image-results">
+        <div class="row mt-5 image-results" id = "image-results">
           <div class="col">
             <img class="output img-fluid"/>
 
@@ -23,11 +23,11 @@
             
             <div class = "row">
               <div class = "col-sm prev-button" id = "prev-button">
-                <a class = "btn btn-light" href = "#" onclick = "goPrev()" id = "goPrev">Prev</a>
+                <button type = "button" class = "btn btn-light" href = "#" onclick = "goPrev()" id = "goPrev">Prev</button>
               </div>
 
               <div class = "col-sm next-button" id = "next-button">
-                <a class = "btn btn-light" href = "#" onclick = "goNext()" id = "goNext">Next</a>
+                <button type="button" class = "btn btn-light" href = "#" onclick = "goNext()" id = "goNext">Next</button>
               </div>
             </div>
           </div>
@@ -36,7 +36,7 @@
             <h1>Results:</h1>
             <p>System has indicated Pneumothorax was: <span style="color:chartreuse" id = "detect">DETECTED</span></p>
             <p id = "accuracy">This has been calculated with a 76.2% accuracy.</p>
-            <p>We recommend this image is reviewed by a medical professionnal before action is taken.</p>
+            <p id = "advice">We recommend this image is reviewed by a medical professionnal before action is taken.</p>
 
             <br><br> <a class = "btn btn-primary btn-lg" href = "#" onclick = "goHome()" id = "goHome">Home</a>
           </div>
