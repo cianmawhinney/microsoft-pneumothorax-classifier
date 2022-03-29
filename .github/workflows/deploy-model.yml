@@ -1,4 +1,4 @@
-name: Model Deploy
+name: deploy-model
 
 # Controls when the workflow will run
 on:
@@ -25,21 +25,10 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
     
-    - name: Add ML extension to Azure CLI
+    - name: Setup, deploy endpoint, deploy model
       uses: azure/CLI@v1
       with:
         inlinescript: |
           az extension add --name ml
-
-    - name: Ensure endpoint exists
-      uses: azure/CLI@v1
-      with:
-        inlinescript: |
           az ml online-endpoint create --file infra/endpoint.yml --resource-group pneumothorax-classifier --workspace-name production
-
-    - name: Deploy model
-      uses: azure/CLI@v1
-      with:
-        inlinescript: |
           az ml online-deployment create --file infra/model-deployment.yml --resource-group pneumothorax-classifier --workspace-name production
-
