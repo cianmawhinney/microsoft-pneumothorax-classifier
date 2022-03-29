@@ -1,8 +1,14 @@
-name: Test
+name: Model Deploy
 
 # Controls when the workflow will run
 on:
-  # Allows you to run this workflow manually from the Actions tab
+  push:
+    branches:
+      - main
+    paths:
+      - "ml/score/**"
+
+  # Allows this workflow to be run manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -11,7 +17,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+    - name: Checkout
+      uses: actions/checkout@v3
+
     - name: Azure Login
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Update deployment
+      uses: azure/CLI@v1
+      with:
+        inlinescript: |
+          az ml online-endpoint update --file infra/vgg-deployment.yml --resource-group pneumothorax-classifier --workspace-name production
+
