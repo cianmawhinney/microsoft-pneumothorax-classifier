@@ -1,1 +1,0 @@
-This folder contains the UI for the project. It is made using HTML, JS and CSS. We also used Bootstrap to help with presentation.
