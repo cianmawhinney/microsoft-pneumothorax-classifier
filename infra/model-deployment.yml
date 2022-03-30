@@ -1,7 +1,7 @@
 $schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
 name: default
 endpoint_name: realtime-endpoint
-model: azureml:vggbased_trans_zoom_tf_softmax:1
+model: azureml:vggbased_trans_zoom_rotate_tf_softmax_15epochs:2
 code_configuration:
   code: 
     local_path: ../ml/inference/
