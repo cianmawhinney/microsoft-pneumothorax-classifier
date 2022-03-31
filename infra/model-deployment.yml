@@ -10,3 +10,5 @@ environment: azureml:custom-tf-24-inference:1
 instance_type: Standard_DS2_v2
 instance_count: 1
 app_insights_enabled: true
+request_settings:
+  request_timeout_ms: 20000
