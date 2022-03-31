@@ -1,7 +1,6 @@
 """Script run by an Azure endpoint to the make predictions on images using the model"""
 
 import os
-from tkinter import image_names
 import tensorflow as tf
 import numpy as np
 from numpy import load
@@ -64,24 +63,39 @@ def init():
 def run(request):
     print(request)
 
-    if request.method == 'POST':
-        # grab the image from the request
-        file_bytes = request.files["image"]
-        image = Image.open(file_bytes).convert('RGB')
+    if request.method == 'POST':        
+        results = []
 
-        # TODO: Build this step into the model itself
-        # convert the image into the right sized numpy array for the model to work with
-        new_image_size = (512, 512)
-        image = image.resize(new_image_size)
-        image_data = tf.keras.preprocessing.image.img_to_array(image)
-        image_data = image_data.reshape(1, 512, 512, 3)
-        image_data /= 255
+        for filename in request.files:
+            # grab the image from the request
+            image = Image.open(request.files[filename]).convert('RGB')
 
-        # return the predictions based on the model
-        predictions = model.predict(image_data).tolist()
+            # convert the image into the right sized numpy array for the model to work with
+            new_image_size = (512, 512)
+            image = image.resize(new_image_size)
+            image_data = tf.keras.preprocessing.image.img_to_array(image)
 
-        #return the calibrated predictions instead
-        predictions = sigmoid_calibrator.calibrate(predictions)
-        return AMLResponse(json.dumps(predictions), 200)
+            image_data = image_data.reshape(1, 512, 512, 3)
+            image_data /= 255
+
+            # calculate predictions based on the model
+            predictions = model.predict(image_data).tolist()
+
+            #return the calibrated predictions instead
+            predictions = sigmoid_calibrator.calibrate(predictions)
+
+            # TODO: return an object in the format:
+            # [
+            #  {
+            #     score: 0.71,
+            #     confidence: 60.5,
+            #     pneumothoraxDetected: true
+            #   },
+            #   ...
+            # ]
+
+            results.append(predictions)
+
+        return AMLResponse(json.dumps(results), 200)
     else:
         return AMLResponse("Bad Request", 500)
