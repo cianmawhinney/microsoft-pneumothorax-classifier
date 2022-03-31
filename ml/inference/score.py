@@ -47,7 +47,6 @@ def init():
     model_folder = os.path.join(os.getenv("AZUREML_MODEL_DIR"), "outputs")
     model = tf.keras.models.load_model(model_folder)
     print('Model loaded')
-    print(model)
 
     #Load our previous predictions and labels for calibration
     model_prediction_outputs = load(os.path.join(model_folder, "model_prediction_outputs_vgg_softmax_15.npy"))
@@ -84,18 +83,13 @@ def run(request):
             # return the calibrated predictions instead
             predictions = sigmoid_calibrator.calibrate(predictions)
 
-            # TODO: return an object in the format:
-            # [
-            #  {
-            #     score: 0.71,
-            #     confidence: 60.5,
-            #     pneumothoraxDetected: true
-            #   },
-            #   ...
-            # ]
+            postitive_case_index = 1
+            result = {
+                "pneumothoraxDetected": (np.argmax(predictions) == postitive_case_index),
+                "confidence": np.amax(predictions) * 100
+            }
 
-            # convert predictions numpy array to plain array
-            results.append(predictions.tolist())
+            results.append(result)
 
         return AMLResponse(json.dumps(results), 200)
     else:
