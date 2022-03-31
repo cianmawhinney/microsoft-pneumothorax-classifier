@@ -4,6 +4,11 @@ import os
 from tkinter import image_names
 import tensorflow as tf
 import numpy as np
+from numpy import load
+from sklearn.metrics import confusion_matrix
+from sklearn.isotonic import IsotonicRegression
+from sklearn.linear_model import LinearRegression
+from sklearn.calibration import calibration_curve
 
 from azureml.contrib.services.aml_request import AMLRequest, rawhttp
 from azureml.contrib.services.aml_response import AMLResponse
@@ -12,8 +17,32 @@ import json
 
 # Based on https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-advanced-entry-script#binary-data
 
+class SigmoidCalibrator:
+    def __init__(self, prob_pred, prob_true):
+        prob_pred, prob_true = self._filter_out_of_domain(prob_pred, prob_true)
+        prob_true = np.log(prob_true / (1 - prob_true))
+        self.regressor = LinearRegression().fit(
+            prob_pred.reshape(-1, 1), prob_true.reshape(-1, 1)
+        )
+
+    def calibrate(self, probabilities):
+        return 1 / (1 + np.exp(-self.regressor.predict(probabilities.reshape(-1, 1)).flatten()))
+
+    def _filter_out_of_domain(self, prob_pred, prob_true):
+        filtered = list(zip(*[p for p in zip(prob_pred, prob_true) if 0 < p[1] < 1]))
+        return np.array(filtered)
+
+
+class IsotonicCalibrator:
+    def __init__(self, prob_pred, prob_true):
+        self.regressor = IsotonicRegression(out_of_bounds="clip")
+        self.regressor.fit(prob_pred, prob_true)
+
+    def calibrate(self, probabilities):
+        return self.regressor.predict(probabilities)
+
 def init():
-    global model
+    global model, sigmoid_calibrator
 
     # AZUREML_MODEL_DIR points to the folder ./azureml-models/$MODEL_NAME/$VERSION
     model_folder = os.path.join(os.getenv("AZUREML_MODEL_DIR"), "outputs")
@@ -21,6 +50,15 @@ def init():
     print('Model loaded')
     print(model)
 
+    #Load our previous predictions and labels for calibration
+    model_prediction_outputs = load("model_prediction_outputs_vgg_softmax_15.npy")
+    actuaL_image_labels = load("actuaL_image_labels_vgg_softmax_15.npy")
+    print("Calibration data loaded")
+
+    prob_true, prob_pred = calibration_curve(actuaL_image_labels, model_prediction_outputs, f'Model before calibration')
+
+    #This is the calibrator we use once it has been fed the data
+    sigmoid_calibrator = SigmoidCalibrator(prob_pred, prob_true)
 
 @rawhttp
 def run(request):
@@ -41,6 +79,9 @@ def run(request):
 
         # return the predictions based on the model
         predictions = model.predict(image_data).tolist()
+
+        #return the calibrated predictions instead
+        predictions = sigmoid_calibrator.calibrate(predictions)
         return AMLResponse(json.dumps(predictions), 200)
     else:
         return AMLResponse("Bad Request", 500)
