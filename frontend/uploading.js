@@ -15,8 +15,9 @@ function onFileInputChange(event) {
   }
 }
 
-function onFileSubmit() {
-  results = uploadImages(fileSelector.files);
+async function onFileSubmit() {
+  document.getElementById('upload-status').innerText = 'Uploading images...';
+  results = await uploadImages(fileSelector.files);
   // TODO: show loading icon/text
 
   // switch 'screens' to the show results
@@ -60,8 +61,11 @@ async function uploadImages(files) {
 
 function goHome()
 {
+  // TODO: get rid of jquery
   $(".image-results").hide();
   $(".main-content").css("display", "flex");
+
+  document.getElementById('upload-status').innerText = 'Please select the images to classify';
 };
 
 function goPrev()
@@ -109,8 +113,7 @@ function goNext()
 };
 
 // changes the results being outputted currently on screen due to change in image
-function updateResults() 
-{
+function updateResults() {
   document.getElementById("goPrev").disabled = false;
   document.getElementById("goNext").disabled = false;
 
@@ -125,18 +128,16 @@ function updateResults()
   let imageEl = document.getElementById("output");
   imageEl.src = URL.createObjectURL(image);
 
-  // if (results[currentFileIndex].pneumothoraxDetected)               // if there is PNEUMOTHORAX detected in new image, we say that
-  // {
-  //    document.getElementById("detect").innerHTML = "DETECTED"; 
-  //    document.getElementById("advice").innerHTML = "We recommend this image is reviewed by a medical professionnal before action is taken."
-  // }
+  let positiveCase = results[currentFileIndex].pneumothoraxDetected;
+  let resultEl = document.getElementById("results-detection");
+  if (positiveCase) {
+     resultEl.innerText = "DETECTED";
+  } else {
+    resultEl.innerText = "NOT DETECTED";
+  }
 
-  // else
-  // {
-  //    document.getElementById("detect").innerHTML = "NOT DETECTED";              // if not in new image we do opposite
-  //    document.getElementById("advice").innerHTML = "We don't recommend this image is reviewed by a medical professionnal at this time."
-  // }
-
-  // let accurate = results[currentFileIndex].confidence;
-  // document.getElementById("accuracy").innerHTML = "This has been calculated with a " + accurate + " accuracy";
-};
+  // display percentage confidence, rounded to 2 decimal places
+  let confidenceEl = document.getElementById("result-confidence");
+  let confidence = (results[currentFileIndex].confidence * 100).toFixed(2);
+  confidenceEl.innerText = confidence;
+}

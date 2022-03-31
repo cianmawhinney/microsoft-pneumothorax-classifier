@@ -34,9 +34,8 @@
 
           <div class="col">
             <h1>Results:</h1>
-            <p>System has indicated Pneumothorax was: <span style="color:chartreuse" id = "detect">DETECTED</span></p>
-            <p id = "accuracy">This has been calculated with a 76.2% accuracy.</p>
-            <p id = "advice">We recommend this image is reviewed by a medical professionnal before action is taken.</p>
+            <p>System has indicated Pneumothorax was: <span style="color:chartreuse" id="results-detection">DETECTED</span></p>
+            <p>Confidence of result: <span id="result-confidence"></span>%</p>
 
             <br><br> <a class = "btn btn-primary btn-lg" href = "#" onclick = "goHome()" id = "goHome">Home</a>
           </div>
@@ -48,7 +47,7 @@
             <div id="image-preview-container">
               <!-- Images which are selected to be uploaded get added here -->
             </div>
-            <label class="form-label" for="customFile">Please submit a file</label>
+            <label class="form-label" for="customFile" id="upload-status">Please select the images to classify</label>
             <input type="file" accept="image/png, image/dcim" onchange="onFileInputChange(event)" class="form-control bg-dark text-white mb-3 file_upload" id="customFile" multiple/>
             <a class="btn btn-primary form-control" href="#" onclick="onFileSubmit(event)" id="change">Submit</a>
           </div>
