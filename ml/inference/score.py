@@ -50,8 +50,8 @@ def init():
     print(model)
 
     #Load our previous predictions and labels for calibration
-    model_prediction_outputs = load("model_prediction_outputs_vgg_softmax_15.npy")
-    actuaL_image_labels = load("actuaL_image_labels_vgg_softmax_15.npy")
+    model_prediction_outputs = load(os.path.join(model_folder, "model_prediction_outputs_vgg_softmax_15.npy"))
+    actuaL_image_labels = load(os.path.join(model_folder, "actuaL_image_labels_vgg_softmax_15.npy"))
     print("Calibration data loaded")
 
     prob_true, prob_pred = calibration_curve(actuaL_image_labels, model_prediction_outputs, f'Model before calibration')
