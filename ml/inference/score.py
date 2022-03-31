@@ -85,8 +85,8 @@ def run(request):
 
             postitive_case_index = 1
             result = {
-                "pneumothoraxDetected": (np.argmax(predictions) == postitive_case_index),
-                "confidence": np.amax(predictions) * 100
+                "pneumothoraxDetected": bool(np.argmax(predictions) == postitive_case_index),
+                "confidence": np.amax(predictions).item()
             }
 
             results.append(result)
