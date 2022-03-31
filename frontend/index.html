@@ -17,7 +17,7 @@
 
         <div class="row mt-5 image-results" id = "image-results">
           <div class="col">
-            <img class="output img-fluid"/>
+            <img class="output img-fluid" id="output"/>
 
             <br><br>
             
@@ -45,10 +45,12 @@
         <div class="row align-items-center main-content">
           <div class="col"></div>
           <div class="col-5">
-            <img class="output" width="400" />	
+            <div id="image-preview-container">
+              <!-- Images which are selected to be uploaded get added here -->
+            </div>
             <label class="form-label" for="customFile">Please submit a file</label>
-            <input type="file" accept="image/png, image/dcim" onchange="loadFile(event)" class="form-control bg-dark text-white mb-3 file_upload" id="customFile" />
-            <a class="btn btn-primary form-control" href="#" onclick="uploadImage()" id="change">Submit</a>
+            <input type="file" accept="image/png, image/dcim" onchange="onFileInputChange(event)" class="form-control bg-dark text-white mb-3 file_upload" id="customFile" multiple/>
+            <a class="btn btn-primary form-control" href="#" onclick="onFileSubmit(event)" id="change">Submit</a>
           </div>
           <div class="col"></div>
         </div>
@@ -73,11 +75,5 @@
     <script src="uploading.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.js" integrity="sha256-htsAUOIgN8xkootpQUzmvaCbQo6x2PNMTD7kLWI6yYQ=" crossorigin="anonymous"></script>
-    <script>
-      var loadFile = function(event) {
-        var images = $(".output");
-        images.attr("src", URL.createObjectURL(event.target.files[0]));
-      };
-    </script>
   </body>
 </html> 

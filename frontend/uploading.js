@@ -1,102 +1,131 @@
-async function uploadImage() {
-  submittedUI();
+let fileSelector = document.getElementById('customFile');
+let currentFileIndex = 0;
+let results = [];
+
+function onFileInputChange(event) {
+  let imageContainer = document.getElementById('image-preview-container');
+  imageContainer.replaceChildren(); // ensure there are no images already being shown
+
+  // add all images to the container
+  for (let image of event.target.files) {
+    let imageEl = document.createElement('img');
+    imageEl.setAttribute('src', URL.createObjectURL(image));
+    imageEl.setAttribute('width', 100);
+    imageContainer.appendChild(imageEl);
+  }
+}
+
+function onFileSubmit() {
+  results = uploadImages(fileSelector.files);
+  // TODO: show loading icon/text
+
+  // switch 'screens' to the show results
+  $(".main-content").css("display", "none")
+  $(".image-results").css("display", "flex")
+
+  currentFileIndex = 0;
+  updateResults();
+
+  // if there's not a batch of images, no need to display prev and next buttons
+  if (results.length <= 1)
+  {
+    $(".prev-button").hide();
+    $(".next-button").hide();
+  }
+}
+
+async function uploadImages(files) {
   const endpointURL = "https://pneumothorax.mawh.in/score"
   const apiKey = "LDzXDtJKHklAX2uhlDHRdbf5DRcTgXYf";
 
   const data = new FormData();
   const images = document.getElementById('customFile');
-  // const images = document.querySelector('input[type="file"][multiple]');
-  for (let i = 0; i < images.files.length; i++) {
-    data.append('image', images.files[i]);
+  for (let i = 0; i < files.length; i++) {
+    data.append(`image_${i}`, files[i]);
   }
-  
-  await fetch(endpointURL, {
+
+  let fetchOptions = {
     method: 'POST',
     body: data,
     headers: {
       'Authorization': `Bearer ${apiKey}`,
     },
-  })
-  .then(response => response.json())
-  .then(result => {
-    console.log('Success:', result);
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
+  };
+
+  let response = await fetch(endpointURL, fetchOptions);
+  let results = await response.json();
+
+  return results;
 }
 
-function submittedUI() {
-  $(".main-content").hide()
-  $(".image-results").css("display", "flex")
-
-  let prevHidden = new Boolean(true);
-  let nextHidden = new Boolean(false);
-  let current = 0;
-
-  // if (results.length < 2)                     // if there's not a batch of images, no need to display prev and next buttons
-  // {
-  //   $(".prev-button").hide();
-  //   $(".next-button").hide();
-  //   nextHidden = true;
-  //   
-  // }
-}
-
-function goHome()             // add all these into 'app.js'?
+function goHome()
 {
   $(".image-results").hide();
   $(".main-content").css("display", "flex");
 };
 
-function goPrev()               // NEED TO DECLARE VARIABLE 'current' SOMEWHERE EVERYTIME IMAGE UPLOADED (declare to 0)
+function goPrev()
 {
-  // if (current > 0)           // should be somewhat like this?
-  // {
-  //   current--;
+  if (currentFileIndex > 0)
+  {
+    currentFileIndex--;
     updateResults();
-  // }
+  }
 
-  // if (current === 0)         // if there's no need for a prev button
+  // // if there's no need for a prev button
+  // if (currentFileIndex === 0)
   // {
-     document.getElementById("goPrev").disabled = true;
-     prevHidden = true;
+  //    document.getElementById("goPrev").disabled = true;
   // }
   
-  // if (nextHidden && results.length > 1)              // if next is hidden and we will now need it again after going back one image
+  // // if next is hidden and we will now need it again after going back one image
+  // let nextHidden = document.getElementById("goNext").disabled
+  // if (nextHidden && results.length > 1)              
   // {
-      document.getElementById("goNext").disabled = false;
-      nextHidden = false;
+  //     document.getElementById("goNext").disabled = false;
   // }
-
-  updateResults();
 };
 
-function goNext()                 // functions are more or less the same as in goPrev, just flipped to cater for the opposite as such
+function goNext()
 {
-  // if (current < results.length)          
+  if (currentFileIndex < fileSelector.files.length)          
+  {
+    currentFileIndex++;
+    updateResults();
+  }
+
+  // // if there's no need for a next button
+  // if (currentFileIndex === (fileSelector.files.length - 1))
   // {
-  //   current++;
-      updateResults();
+  //   document.getElementById("goNext").disabled = true;
   // }
 
-  // if (current === (results.length - 1))
+  // // if prev is hidden and we will now need it again after going forward one image
+  // let prevHidden = document.getElementById("goPrev").disabled;
+  // if (prevHidden && fileSelector.files.length > 1)
   // {
+  //   document.getElementById("goPrev").disabled = false;
+  // }
+};
+
+// changes the results being outputted currently on screen due to change in image
+function updateResults() 
+{
+  document.getElementById("goPrev").disabled = false;
+  document.getElementById("goNext").disabled = false;
+
+  if (currentFileIndex === 0) {
+    document.getElementById("goPrev").disabled = true;
+  }
+  if (currentFileIndex === (fileSelector.files.length - 1)) {
     document.getElementById("goNext").disabled = true;
-    nextHidden = true;
-  // }       
+  }
 
+  let image = fileSelector.files[currentFileIndex];
+  let imageEl = document.getElementById("output");
+  imageEl.src = URL.createObjectURL(image);
 
-  // if (prevHidden && results.length > 1)
-  // {
-    document.getElementById("goPrev").disabled = false;
-     prevHidden = false;
-  // }
-};
-
-function updateResults()              // changes the results being outputted currently on screen due to change in image
-{
-  // if (results[current].pneumothoraxDetected)               // if there is PNEUMOTHORAX detected in new image, we say that
+  // if (results[currentFileIndex].pneumothoraxDetected)               // if there is PNEUMOTHORAX detected in new image, we say that
   // {
   //    document.getElementById("detect").innerHTML = "DETECTED"; 
   //    document.getElementById("advice").innerHTML = "We recommend this image is reviewed by a medical professionnal before action is taken."
@@ -108,8 +137,6 @@ function updateResults()              // changes the results being outputted cur
   //    document.getElementById("advice").innerHTML = "We don't recommend this image is reviewed by a medical professionnal at this time."
   // }
 
-  // let accurate = results[current].confidence;
+  // let accurate = results[currentFileIndex].confidence;
   // document.getElementById("accuracy").innerHTML = "This has been calculated with a " + accurate + " accuracy";
-
-  // document.getElementById("image-results").src = NEW SOURCE?
 };
