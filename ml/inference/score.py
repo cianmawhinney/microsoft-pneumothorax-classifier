@@ -51,10 +51,10 @@ def init():
 
     #Load our previous predictions and labels for calibration
     model_prediction_outputs = load(os.path.join(model_folder, "model_prediction_outputs_vgg_softmax_15.npy"))
-    actuaL_image_labels = load(os.path.join(model_folder, "actuaL_image_labels_vgg_softmax_15.npy"))
+    actual_image_labels = load(os.path.join(model_folder, "actual_image_labels_vgg_softmax_15.npy"))
     print("Calibration data loaded")
 
-    prob_true, prob_pred = calibration_curve(actuaL_image_labels, model_prediction_outputs, f'Model before calibration')
+    prob_true, prob_pred = calibration_curve(actual_image_labels, model_prediction_outputs, f'Model before calibration')
 
     #This is the calibrator we use once it has been fed the data
     sigmoid_calibrator = SigmoidCalibrator(prob_pred, prob_true)
