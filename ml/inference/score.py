@@ -26,27 +26,36 @@ def run(request):
     print(request)
 
     if request.method == 'POST':
-        # grab the image from the request
-        # file_bytes = request.files["image"]
 
-        images = []
-        for file in request.files:
-            images.append(file)
-        return json.dumps(images)
+        results = []
 
-        # image = Image.open(file_bytes).convert('RGB')
+        for filename in request.files:
+            # grab the image from the request
+            image = Image.open(request.files[filename]).convert('RGB')
 
-        # # convert the image into the right sized numpy array for the model to work with
-        # new_image_size = (512, 512)
-        # image = image.resize(new_image_size)
-        # image_data = tf.keras.preprocessing.image.img_to_array(image)
+            # convert the image into the right sized numpy array for the model to work with
+            new_image_size = (512, 512)
+            image = image.resize(new_image_size)
+            image_data = tf.keras.preprocessing.image.img_to_array(image)
 
-        
-        # image_data = image_data.reshape(1, 512, 512, 3)
-        # image_data /= 255
+            image_data = image_data.reshape(1, 512, 512, 3)
+            image_data /= 255
 
-        # # return the predictions based on the model
-        # predictions = model.predict(image_data).tolist()
-        # return AMLResponse(json.dumps(predictions), 200)
+            # calculate predictions based on the model
+            predictions = model.predict(image_data).tolist()
+
+            # TODO: return an object in the format:
+            # [
+            #  {
+            #     score: 0.71,
+            #     confidence: 60.5,
+            #     pneumothoraxDetected: true
+            #   },
+            #   ...
+            # ]
+
+            results.append(predictions)
+
+        return AMLResponse(json.dumps(results), 200)
     else:
         return AMLResponse("Bad Request", 500)
