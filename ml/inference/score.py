@@ -27,19 +27,26 @@ def run(request):
 
     if request.method == 'POST':
         # grab the image from the request
-        file_bytes = request.files["image"]
-        image = Image.open(file_bytes).convert('RGB')
+        # file_bytes = request.files["image"]
 
-        # TODO: Build this step into the model itself
-        # convert the image into the right sized numpy array for the model to work with
-        new_image_size = (512, 512)
-        image = image.resize(new_image_size)
-        image_data = tf.keras.preprocessing.image.img_to_array(image)
-        image_data = image_data.reshape(1, 512, 512, 3)
-        image_data /= 255
+        images = []
+        for file in request.files:
+            images.append(file)
+        return json.dumps(images)
 
-        # return the predictions based on the model
-        predictions = model.predict(image_data).tolist()
-        return AMLResponse(json.dumps(predictions), 200)
+        # image = Image.open(file_bytes).convert('RGB')
+
+        # # convert the image into the right sized numpy array for the model to work with
+        # new_image_size = (512, 512)
+        # image = image.resize(new_image_size)
+        # image_data = tf.keras.preprocessing.image.img_to_array(image)
+
+        
+        # image_data = image_data.reshape(1, 512, 512, 3)
+        # image_data /= 255
+
+        # # return the predictions based on the model
+        # predictions = model.predict(image_data).tolist()
+        # return AMLResponse(json.dumps(predictions), 200)
     else:
         return AMLResponse("Bad Request", 500)
