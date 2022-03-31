@@ -63,7 +63,7 @@ def init():
 def run(request):
     print(request)
 
-    if request.method == 'POST':        
+    if request.method == 'POST':
         results = []
 
         for filename in request.files:
@@ -79,9 +79,9 @@ def run(request):
             image_data /= 255
 
             # calculate predictions based on the model
-            predictions = model.predict(image_data).tolist()
+            predictions = model.predict(image_data)
 
-            #return the calibrated predictions instead
+            # return the calibrated predictions instead
             predictions = sigmoid_calibrator.calibrate(predictions)
 
             # TODO: return an object in the format:
@@ -94,7 +94,8 @@ def run(request):
             #   ...
             # ]
 
-            results.append(predictions)
+            # convert predictions numpy array to plain array
+            results.append(predictions.tolist())
 
         return AMLResponse(json.dumps(results), 200)
     else:
