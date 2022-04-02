@@ -57,7 +57,8 @@ IMAGE_SIZE = (512,512)
 def build_dataset(subset):
   return tf.keras.preprocessing.image_dataset_from_directory(
       arg_data_folder + "/png_images/" + subset,
-      label_mode="binary",
+      labels="inferred",
+      label_mode="categorical",
       seed=123,
       image_size=IMAGE_SIZE,
       batch_size=1)
@@ -75,20 +76,20 @@ preprocessing_model = tf.keras.Sequential([normalization_layer])
 #Do / don't do data augmentation
 do_data_augmentation = True
 if do_data_augmentation:
+  # preprocessing_model.add(
+  #   tf.keras.layers.experimental.preprocessing.RandomRotation(5))
   preprocessing_model.add(
-      tf.keras.layers.experimental.preprocessing.RandomRotation(10))
+    tf.keras.layers.experimental.preprocessing.RandomTranslation(0, 0.2))
   preprocessing_model.add(
-      tf.keras.layers.experimental.preprocessing.RandomTranslation(0, 0.1))
-  preprocessing_model.add(
-      tf.keras.layers.experimental.preprocessing.RandomTranslation(0.1, 0))
+    tf.keras.layers.experimental.preprocessing.RandomTranslation(0.2, 0))
   # Like the old tf.keras.preprocessing.image.ImageDataGenerator(),
   # image sizes are fixed when reading, and then a random zoom is applied.
   # If all training inputs are larger than image_size, one could also use
   # RandomCrop with a batch size of 1 and rebatch later.
   preprocessing_model.add(
-      tf.keras.layers.experimental.preprocessing.RandomZoom(0.1, 0.1))
-#   preprocessing_model.add(
-#       tf.keras.layers.RandomFlip(mode="horizontal"))
+      tf.keras.layers.experimental.preprocessing.RandomZoom(0.2, 0.2))
+  #preprocessing_model.add(
+  #    tf.keras.layers.experimental.preprocessing.RandomFlip(mode="horizontal"))
 
 #Mapping the images and their corresponding labels
 train_ds = train_ds.map(lambda images, labels:
@@ -117,7 +118,7 @@ model = Flatten()(model)
 model = Dense(256, activation="relu")(model)
 model= tf.keras.layers.Dropout(0.2)(model)
 model = Dense(128, activation="relu")(model)
-output_layer = Dense(1, activation="sigmoid")(model)
+output_layer = Dense(2, activation="softmax")(model)
 model_2 = Model(model_vgg19.input,output_layer)
 
 #Print layers of our model
@@ -151,33 +152,34 @@ recall = tf.keras.metrics.Recall(name='recall')
 callback_list = [model_checkpoint, myCallback(threshold=0.99),tensorboard_callback] #earlystop,
 
 #Compile our first model
-model_2.compile(loss = "binary_crossentropy", optimizer=adam, metrics=["accuracy", recall, precision])
+model_2.compile(loss = "categorical_crossentropy", optimizer=adam, metrics=["accuracy", recall, precision])
 
 steps_per_epoch = train_size // BATCH_SIZE
 validation_steps = valid_size // BATCH_SIZE
 
 #Do our first run of fitting the model
-history = model_2.fit(train_ds, epochs=10,verbose=1,validation_data=val_ds,batch_size=64,callbacks=callback_list,steps_per_epoch=steps_per_epoch, validation_steps=validation_steps)
+history = model_2.fit(train_ds, epochs=12,verbose=1,validation_data=val_ds,batch_size=64,callbacks=callback_list,steps_per_epoch=steps_per_epoch, validation_steps=validation_steps)
 
 #Evaluate the fine tuned model
-loss, accuracy, *anything_else = model_2.evaluate(val_ds)
+loss, accuracy, recall, precision = model_2.evaluate(val_ds)
 print('Test accuracy :', accuracy)
 print('Loss : ', loss)
-print('Other: ', anything_else)
+print('Recall: ', recall)
+print('Precision: ', precision)
 
 #Set the top few layers of our base model to be trainable
 model_vgg19.trainable = True
-fine_tune_at = len(model_vgg19.layers) - 4
+fine_tune_at = len(model_vgg19.layers) - 6
 for layer in model_vgg19.layers[:fine_tune_at]:
   layer.trainable = False
 
 #Recompile the model
 adam = tf.keras.optimizers.Adam(lr=0.00002)
-model_2.compile(loss = "binary_crossentropy", optimizer=adam, metrics=[tf.keras.metrics.BinaryAccuracy(), recall, precision])
+model_2.compile(loss = "categorical_crossentropy", optimizer=adam, metrics=["accuracy", recall, precision])
 model_2.summary()
 
-fine_tune_epochs = 10
-initial_epochs = 10
+fine_tune_epochs = 12
+initial_epochs = 12
 total_epochs =  initial_epochs + fine_tune_epochs
 
 #Perform the next fit of the model

@@ -1,0 +1,14 @@
+$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
+name: default
+endpoint_name: realtime-endpoint
+model: azureml:vgg_tran_zm_rot_tf_softmax_15e:2
+code_configuration:
+  code: 
+    local_path: ../ml/inference/
+  scoring_script: score.py
+environment: azureml:custom-tf-24-inference:2
+instance_type: Standard_DS2_v2
+instance_count: 1
+app_insights_enabled: true
+request_settings:
+  request_timeout_ms: 20000

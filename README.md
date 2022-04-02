@@ -1,7 +1,12 @@
 # Pneumothorax Classifier
+[![deploy-frontend](https://github.com/cianmawhinney/microsoft-pneumothorax-classifier/actions/workflows/deploy-frontend.yml/badge.svg)](https://github.com/cianmawhinney/microsoft-pneumothorax-classifier/actions/workflows/deploy-frontend.yml)
+[![deploy-model](https://github.com/cianmawhinney/microsoft-pneumothorax-classifier/actions/workflows/deploy-model.yml/badge.svg)](https://github.com/cianmawhinney/microsoft-pneumothorax-classifier/actions/workflows/deploy-model.yml)
+
 A machine learning application to classify chest X-rays for detecting pneumothorax
 
-# Dataset
+# ML Model
+
+## Dataset
 The page for the dataset we used can be found here: https://www.kaggle.com/vbookshelf/pneumothorax-chest-xray-images-and-masks
 It has been changed from the original dataset used in that competition to make it easier to work with. The images and masks have been converted to pngs instead
 of dcim and rngs. 
@@ -10,22 +15,35 @@ A second version of the dataset has been created in azure where the masks have b
 
 ### Stats
 Number of files: 12047  
-| # Training Images | 10675 |  
-| - | - |
-| Positive | 2379 |
-| Negative | 8296 |
+| # Training Images | 10675 |
+|-------------------|-------|
+| Positive          | 2379  |
+| Negative          | 8296  |
 
-| # Testing Images | 1372 |  
-| - | - |
-| Positive | 290 |
-| Negative | 1082 |
+| # Testing Images | 1372 |
+|------------------|------|
+| Positive         | 290  |
+| Negative         | 1082 |
 
 #### Model Results
-| # Name                          | # Loss | # Accuracy | # Recall | # Precision |
-| - | - | - | - | - |
-| VGG No Augmentation Fine Tuning | 0.3922 | 0.8393 | 0.6512 | 0.608 |
-| VGG with augmentation           | 0.4554 | 0.7902 | 0? (not sure why) | 0 |
-| VGG no augmentation             | 0.3866 | 0.84   | 0.3936 | 0.7167 |
-| VGG with augmentation and fine tuning | 0.3629 | 0.84 | 0.4036 | 0.7019 | 
-| EfficientNet with augmentation | 1.1644 | 0.7909 | N/A | N/A | 
-| EfficientNet no augmentation | 0.509 | 0.8229 | N/A | N/A |
+| # Name                                   | # Loss | # Accuracy | # Recall          | # Precision |
+|------------------------------------------|--------|------------|-------------------|-------------|
+| VGG No Augmentation Fine Tuning          | 0.3922 | 0.8393     | 0.6512            | 0.608       |
+| VGG with augmentation                    | 0.4554 | 0.7902     | 0? (not sure why) | 0           |
+| VGG no augmentation                      | 0.3866 | 0.84       | 0.3936            | 0.7167      |
+| VGG with augmentation and fine tuning    | 0.3629 | 0.84       | 0.4036            | 0.7019      |
+| VGG with trans and zoom and fine tuninng | 0.3752 | 0.8608     | 0.5               | 0.7592      |
+| EfficientNet with augmentation           | 1.1644 | 0.7909     | N/A               | N/A         |
+| EfficientNet no augmentation             | 0.509  | 0.8229     | N/A               | N/A         |
+
+
+# Front end UI
+The front end web interface was created using the Bootstrap 5 framework.
+Multiple images can be uploaded and the results displayed to the end user so a diagnosis can be made.
+
+<!-- TODO: Fill this out later with more details -->
+
+# Infrastructure
+The infrastructure is hosted in Azure, using ML Studio. Deployments are automated using GitHub actions so that when the code for the model is modified, the model is re-trained and deployed to a realtime endpoint.
+
+<!-- TODO: Fill this out later with more details -->
