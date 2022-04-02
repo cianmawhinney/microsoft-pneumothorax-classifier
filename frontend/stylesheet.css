@@ -11,60 +11,14 @@ html, body {
   color: white;
   display: flex;
   flex-direction: column;
-  max-width: 70em;
 }
-
-/* .footer {
-  margin-top: auto;
-  flex-shrink: 0;
-} */
-
-/* .main-content {
-  height: 90%;
-} */
-
-/* .header {
-  height: 6%;
-} */
 
 .image-results {
   height: 90%;
   display: none;
 }
 
-/* .footer-container {
-  height: 4%;
-} */
-
-/*
-.welcome {
-  min-height: 100%;
-  padding: 20px;
-  padding-bottom: 550px;
-}
-
-.middle {
-  height: 100px;
-  text-align: center;
-}
-
-.form {
-  height: 70px;
-  margin-top: -200px;
-}
-
-.footer {
-  padding-left: 20px;
-  height: 40px;
-  margin-top: 0px;
-}
-*/
-
-
-
-/*
- * Header
- */
+/* Header */
 .nav-masthead .nav-link {
   padding: .25rem 0;
   font-weight: 700;
