@@ -136,8 +136,4 @@ function updateResults() {
     resultEl.innerText = "NOT DETECTED";
   }
 
-  // display percentage confidence, rounded to 2 decimal places
-  let confidenceEl = document.getElementById("result-confidence");
-  let confidence = (results[currentFileIndex].confidence * 100).toFixed(2);
-  confidenceEl.innerText = confidence;
 }
