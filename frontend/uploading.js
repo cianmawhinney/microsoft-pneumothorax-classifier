@@ -10,6 +10,7 @@ function onFileInputChange(event) {
   for (let image of event.target.files) {
     let imageEl = document.createElement('img');
     imageEl.setAttribute('src', URL.createObjectURL(image));
+    imageEl.classList.add('margin-border-class');
     imageEl.setAttribute('width', 100);
     imageContainer.appendChild(imageEl);
   }

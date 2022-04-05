@@ -22,9 +22,15 @@ body {
   display: none;
 }
 
-/*Aditional margin top spacer*/
+/*Additional margin top spacer*/
 .mt-10 {
 margin-top: 10rem;
+}
+
+/*class for image spacing and border */
+.margin-border-class {
+  margin: .3rem;
+  border: 2px solid #fff;
 }
 
 /* Header */
