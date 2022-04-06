@@ -3,8 +3,7 @@ name: default
 endpoint_name: realtime-endpoint
 model: azureml:vggbased_trans_zoom_contrast_extra_training:1
 code_configuration:
-  code: 
-    local_path: ../ml/inference/
+  code: ../ml/inference/
   scoring_script: score_no_confidence.py
 environment: azureml:custom-tf-24-inference:2
 instance_type: Standard_DS2_v2
