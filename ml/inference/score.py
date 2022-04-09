@@ -41,7 +41,7 @@ class IsotonicCalibrator:
         return self.regressor.predict(probabilities)
 
 def init():
-    global model, sigmoid_calibrator
+    global model, sigmoid_calibrator, isotonic_calibrator
 
     # AZUREML_MODEL_DIR points to the folder ./azureml-models/$MODEL_NAME/$VERSION
     model_folder = os.path.join(os.getenv("AZUREML_MODEL_DIR"), "outputs")
@@ -49,14 +49,15 @@ def init():
     print('Model loaded')
 
     #Load our previous predictions and labels for calibration
-    model_prediction_outputs = load(os.path.join(model_folder, "model_prediction_outputs_vgg_softmax_15.npy"))
-    actual_image_labels = load(os.path.join(model_folder, "actual_image_labels_vgg_softmax_15.npy"))
+    model_prediction_outputs = load(os.path.join(model_folder, "model_prediction_outputs.npy"))
+    actual_image_labels = load(os.path.join(model_folder, "actual_image_labels.npy"))
     print("Calibration data loaded")
 
     prob_true, prob_pred = calibration_curve(actual_image_labels, model_prediction_outputs)
 
     #This is the calibrator we use once it has been fed the data
     sigmoid_calibrator = SigmoidCalibrator(prob_pred, prob_true)
+    isotonic_calibrator = IsotonicCalibrator(prob_pred, prob_true)
 
 @rawhttp
 def run(request):
@@ -81,7 +82,7 @@ def run(request):
             predictions = model.predict(image_data)
 
             # return the calibrated predictions instead
-            predictions = sigmoid_calibrator.calibrate(predictions)
+            predictions = isotonic_calibrator.calibrate(predictions)
 
             postitive_case_index = 1
             result = {
