@@ -1,7 +1,7 @@
 $schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
 name: default
 endpoint_name: realtime-endpoint
-model: azureml:vgg_tran_zm_rot_tf_softmax_15e:2
+model: azureml:vggbased_tr_zm_con_xtra_train:1
 code_configuration:
   code: ../ml/inference/
   scoring_script: score.py
