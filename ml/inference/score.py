@@ -86,7 +86,7 @@ def run(request):
 
             threshold = 0.15
             result = {
-                "pneumothoraxDetected": bool(np.argmax(predictions) > threshold),
+                "pneumothoraxDetected": bool(np.amax(predictions) > threshold),
                 "confidence": np.amax(predictions).item()
             }
 
