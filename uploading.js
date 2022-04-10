@@ -137,4 +137,7 @@ function updateResults() {
     resultEl.innerText = "NOT DETECTED";
   }
 
+  let confidenceEl = document.getElementById("result-confidence");
+  let confidence = (results[currentFileIndex].confidence * 100).toFixed(2);
+  confidenceEl.innerText = confidence;
 }
