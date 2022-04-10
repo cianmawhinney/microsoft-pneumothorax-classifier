@@ -85,9 +85,14 @@ def run(request):
             predictions = isotonic_calibrator.calibrate(predictions)
 
             threshold = 0.15
+            pneumothoraxDetected = bool(np.amax(predictions) > threshold)
+            confidence = np.amax(predictions).item()
+            if not pneumothoraxDetected:
+                confidence = 1 - confidence
+
             result = {
-                "pneumothoraxDetected": bool(np.amax(predictions) > threshold),
-                "confidence": np.amax(predictions).item()
+                "pneumothoraxDetected": pneumothoraxDetected,
+                "confidence": confidence
             }
 
             results.append(result)
