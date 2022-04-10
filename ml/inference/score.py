@@ -84,9 +84,9 @@ def run(request):
             # return the calibrated predictions instead
             predictions = isotonic_calibrator.calibrate(predictions)
 
-            postitive_case_index = 1
+            threshold = 0.15
             result = {
-                "pneumothoraxDetected": bool(np.argmax(predictions) == postitive_case_index),
+                "pneumothoraxDetected": bool(np.argmax(predictions) > threshold),
                 "confidence": np.amax(predictions).item()
             }
 
