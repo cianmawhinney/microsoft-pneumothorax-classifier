@@ -38,10 +38,11 @@ Number of files: 12047
 
 
 # Front end UI
-The front end web interface was created using the Bootstrap 5 framework.
+The front end web interface was created using HTML, JS, CSS and the Bootstrap 5 framework.
 Multiple images can be uploaded and the results displayed to the end user so a diagnosis can be made.
 
-<!-- TODO: Fill this out later with more details -->
+Primary objecive of design was to create a clean, accessible interface. The main goal of this project was to save medical professionals time which we emulated in the front-end.
+
 
 # Infrastructure
 The infrastructure is hosted in Azure, using ML Studio. Deployments are automated using GitHub actions so that when the code for the model is modified, the model is re-trained and deployed to a realtime endpoint.
