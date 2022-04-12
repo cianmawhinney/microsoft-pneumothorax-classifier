@@ -2,7 +2,7 @@
 [![deploy-frontend](https://github.com/cianmawhinney/microsoft-pneumothorax-classifier/actions/workflows/deploy-frontend.yml/badge.svg)](https://github.com/cianmawhinney/microsoft-pneumothorax-classifier/actions/workflows/deploy-frontend.yml)
 [![deploy-model](https://github.com/cianmawhinney/microsoft-pneumothorax-classifier/actions/workflows/deploy-model.yml/badge.svg)](https://github.com/cianmawhinney/microsoft-pneumothorax-classifier/actions/workflows/deploy-model.yml)
 
-A machine learning application to classify chest X-rays for detecting pneumothorax.
+A machine learning application to classify chest X-rays for detecting pneumothorax, developed during Trinity College Dublin's Software Engineering Project module, with mentorship from engineers at Microsoft.
 
 
 Pneumothorax is a serious medical condition where air leaks into the space between the lung and the chest wall. Diagnosis of the condition is currently performed through the use of a chest X-ray, a difficult process requiring specialist expertise to perform and interpret. Due to the fact that pneumothorax can be life threatening, a fast, accurate diagnosis is desirable, though often wait times can be long due to the workload on staff, or in lesser developed locations staff may not be available at all.
