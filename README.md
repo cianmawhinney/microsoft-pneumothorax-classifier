@@ -8,7 +8,7 @@ A machine learning application to classify chest X-rays for detecting pneumothor
 Pneumothorax is a serious medical condition where air leaks into the space between the lung and the chest wall. Diagnosis of the condition is currently performed through the use of a chest X-ray, a difficult process requiring specialist expertise to perform and interpret. Due to the fact that pneumothorax can be life threatening, a fast, accurate diagnosis is desirable, though often wait times can be long due to the workload on staff, or in lesser developed locations staff may not be available at all.
 
 
-After speaking with staff at Midland Regional Hospital Tullamore, it became clear to our client, Microsoft, that interpreting the X-rays to give a diagnosis would be a good candidate for automation, potentially allowing for faster and more accurate diagnoses.
+After speaking with staff at Midland Regional Hospital Tullamore, it became clear Microsoft, to our client and mentors, that interpreting the X-rays to give a diagnosis would be a good candidate for automation, potentially allowing for faster and more accurate diagnoses.
 
 
 # Front end UI
