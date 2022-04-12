@@ -17,6 +17,8 @@ Multiple images can be uploaded and the results displayed to the end user so a d
 
 Primary objective of design was to create a clean, accessible interface. The main goal of this project was to save medical professionals time which we emulated in the front-end.
 
+The user interface is available at [pneumothorax.mawh.in](https://pneumothorax.mawh.in/)
+
 ## Screenshots
 ### Homepage Screenshot
 ![Homepage Screenshot](docs/images/frontend-home.png)
