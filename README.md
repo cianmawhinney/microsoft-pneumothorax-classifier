@@ -60,7 +60,7 @@ Number of files: 12047
 The infrastructure is hosted in Azure, using ML Studio. Deployments are automated using GitHub Actions so that when changes are made to the model or user interface, they are
 
 ## Architecture Diagram
-![Architecture Diagram](docs/images/Architecture Diagram.drawio.svg)
+![Architecture Diagram](docs/images/Architecture%20Diagram.drawio.svg)
 
 # Authors
  - [Cian Mawhinney](https://github.com/cianmawhinney)
