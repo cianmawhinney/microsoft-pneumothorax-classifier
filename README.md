@@ -29,11 +29,9 @@ The user interface is available at [pneumothorax.mawh.in](https://pneumothorax.m
 # ML Model
 
 ## Dataset
-The page for the dataset we used can be found here: https://www.kaggle.com/vbookshelf/pneumothorax-chest-xray-images-and-masks
-It has been changed from the original dataset used in that competition to make it easier to work with. The images and masks have been converted to pngs instead
-of dcim and rngs. 
+We used a variant of the SIIM-ACR Pneumothorax Segmentation Dataset: https://www.kaggle.com/vbookshelf/pneumothorax-chest-xray-images-and-masks
 
-A second version of the dataset has been created in azure where the masks have been removed for our first round of testing, and also the images have been moved into train and tes subfolders. To allow us to more easily access the relavent images for each step.
+A further change we made to the dataset was separating the training and test data into sub-folders as well as removing the masks since we did not need them for our classification. This allowed us to more easily use the dataset in our training script.
 
 ### Dataset Statistics
 Number of files: 12047  
@@ -47,16 +45,27 @@ Number of files: 12047
 | Positive         | 290  |
 | Negative         | 1082 |
 
-#### Model Results
-| # Name                                   | # Loss | # Accuracy | # Recall          | # Precision |
-|------------------------------------------|--------|------------|-------------------|-------------|
-| VGG No Augmentation Fine Tuning          | 0.3922 | 0.8393     | 0.6512            | 0.608       |
-| VGG with augmentation                    | 0.4554 | 0.7902     | 0? (not sure why) | 0           |
-| VGG no augmentation                      | 0.3866 | 0.84       | 0.3936            | 0.7167      |
-| VGG with augmentation and fine tuning    | 0.3629 | 0.84       | 0.4036            | 0.7019      |
-| VGG with trans and zoom and fine tuninng | 0.3752 | 0.8608     | 0.5               | 0.7592      |
-| EfficientNet with augmentation           | 1.1644 | 0.7909     | N/A               | N/A         |
-| EfficientNet no augmentation             | 0.509  | 0.8229     | N/A               | N/A         |
+## Model Results
+| # Name                                               | # Loss | # Accuracy | # Recall          | # Precision |
+|------------------------------------------------------|--------|------------|-------------------|-------------|
+| VGG No Augmentation Fine Tuning                      | 0.3922 | 0.8393     | 0.6512            | 0.608       |
+| VGG with augmentation                                | 0.4554 | 0.7902     | 0? (not sure why) | 0           |
+| VGG no augmentation                                  | 0.3866 | 0.84       | 0.3936            | 0.7167      |
+| VGG with augmentation and fine tuning                | 0.3629 | 0.84       | 0.4036            | 0.7019      |
+| VGG with trans, zoom and fine tuning                 | 0.3752 | 0.8608     | 0.5               | 0.7592      |
+| VGG with trans, zoom, fine tuning and extra training | 0.4118 | 0.8520     | 0.5655            | 0.6805      |
+| EfficientNet with augmentation                       | 1.1644 | 0.7909     | N/A               | N/A         |
+| EfficientNet no augmentation                         | 0.509  | 0.8229     | N/A               | N/A         |
+
+![Model results over time](docs/images/model-recall-graph.png)
+
+# Final Model
+
+We selected VGG-19 as a base model using it for feature extraction, before building our own classification layers on top.
+![Model Layers Diagram](docs/images/model-diagram.drawio.png)
+
+This model allows for an 80% sensitivity and 78% specificity:
+![Model confusion matrix](docs/images/model-confusion-matrix.png)
 
 # Infrastructure
 The ML related infrastructure is hosted in Azure using Azure's Machine Learning Service, while the user interface is deployed to GitHub pages. Deployments are automated using GitHub Actions so that when changes are made to the model or user interface, they are reflected in production.
