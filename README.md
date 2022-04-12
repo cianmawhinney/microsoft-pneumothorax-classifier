@@ -8,14 +8,14 @@ A machine learning application to classify chest X-rays for detecting pneumothor
 Pneumothorax is a serious medical condition where air leaks into the space between the lung and the chest wall. Diagnosis of the condition is currently performed through the use of a chest X-ray, a difficult process requiring specialist expertise to perform and interpret. Due to the fact that pneumothorax can be life threatening, a fast, accurate diagnosis is desirable, though often wait times can be long due to the workload on staff, or in lesser developed locations staff may not be available at all.
 
 
-After speaking with staff at Midland Regional Hospital Tullamore, it became clear Microsoft, to our client and mentors, that interpreting the X-rays to give a diagnosis would be a good candidate for automation, potentially allowing for faster and more accurate diagnoses.
+After speaking with staff at Midland Regional Hospital Tullamore, it became clear to Microsoft, our client and mentors, that interpreting the X-rays to give a diagnosis would be a good candidate for automation, potentially allowing for faster and more accurate diagnoses.
 
 
 # Front end UI
 The front end web interface was created using HTML, JS, CSS and the Bootstrap 5 framework.
 Multiple images can be uploaded and the results displayed to the end user so a diagnosis can be made.
 
-Primary objective of design was to create a clean, accessible interface. The main goal of this project was to save medical professionals time which we emulated in the front-end.
+Primary objective of design was to create a clean, accessible interface. As a key goal of this project was to save medical professionals time, we opted to keep the user interface quite simple.
 
 The user interface is available at [pneumothorax.mawh.in](https://pneumothorax.mawh.in/)
 
@@ -24,7 +24,7 @@ The user interface is available at [pneumothorax.mawh.in](https://pneumothorax.m
 ![Homepage Screenshot](docs/images/frontend-home.png)
 
 ### Results Screenshot
-![Results Screenshot](docs/images/frontend-home.png)
+![Results Screenshot](docs/images/frontend-results.png)
 
 # ML Model
 
@@ -35,7 +35,7 @@ of dcim and rngs.
 
 A second version of the dataset has been created in azure where the masks have been removed for our first round of testing, and also the images have been moved into train and tes subfolders. To allow us to more easily access the relavent images for each step.
 
-### Stats
+### Dataset Statistics
 Number of files: 12047  
 | # Training Images | 10675 |
 |-------------------|-------|
@@ -59,7 +59,7 @@ Number of files: 12047
 | EfficientNet no augmentation             | 0.509  | 0.8229     | N/A               | N/A         |
 
 # Infrastructure
-The infrastructure is hosted in Azure, using ML Studio. Deployments are automated using GitHub Actions so that when changes are made to the model or user interface, they are
+The ML related infrastructure is hosted in Azure using Azure's Machine Learning Service, while the user interface is deployed to GitHub pages. Deployments are automated using GitHub Actions so that when changes are made to the model or user interface, they are reflected in production.
 
 ## Architecture Diagram
 ![Architecture Diagram](docs/images/Architecture%20Diagram.drawio.svg)
