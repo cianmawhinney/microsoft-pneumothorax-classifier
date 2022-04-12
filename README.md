@@ -2,7 +2,27 @@
 [![deploy-frontend](https://github.com/cianmawhinney/microsoft-pneumothorax-classifier/actions/workflows/deploy-frontend.yml/badge.svg)](https://github.com/cianmawhinney/microsoft-pneumothorax-classifier/actions/workflows/deploy-frontend.yml)
 [![deploy-model](https://github.com/cianmawhinney/microsoft-pneumothorax-classifier/actions/workflows/deploy-model.yml/badge.svg)](https://github.com/cianmawhinney/microsoft-pneumothorax-classifier/actions/workflows/deploy-model.yml)
 
-A machine learning application to classify chest X-rays for detecting pneumothorax
+A machine learning application to classify chest X-rays for detecting pneumothorax.
+
+
+Pneumothorax is a serious medical condition where air leaks into the space between the lung and the chest wall. Diagnosis of the condition is currently performed through the use of a chest X-ray, a difficult process requiring specialist expertise to perform and interpret. Due to the fact that pneumothorax can be life threatening, a fast, accurate diagnosis is desirable, though often wait times can be long due to the workload on staff, or in lesser developed locations staff may not be available at all.
+
+
+After speaking with staff at Midland Regional Hospital Tullamore, it became clear to our client, Microsoft, that interpreting the X-rays to give a diagnosis would be a good candidate for automation, potentially allowing for faster and more accurate diagnoses.
+
+
+# Front end UI
+The front end web interface was created using HTML, JS, CSS and the Bootstrap 5 framework.
+Multiple images can be uploaded and the results displayed to the end user so a diagnosis can be made.
+
+Primary objective of design was to create a clean, accessible interface. The main goal of this project was to save medical professionals time which we emulated in the front-end.
+
+## Screenshots
+### Homepage Screenshot
+![Homepage Screenshot](docs/images/frontend-home.png)
+
+### Results Screenshot
+![Results Screenshot](docs/images/frontend-home.png)
 
 # ML Model
 
@@ -36,15 +56,17 @@ Number of files: 12047
 | EfficientNet with augmentation           | 1.1644 | 0.7909     | N/A               | N/A         |
 | EfficientNet no augmentation             | 0.509  | 0.8229     | N/A               | N/A         |
 
-
-# Front end UI
-The front end web interface was created using HTML, JS, CSS and the Bootstrap 5 framework.
-Multiple images can be uploaded and the results displayed to the end user so a diagnosis can be made.
-
-Primary objecive of design was to create a clean, accessible interface. The main goal of this project was to save medical professionals time which we emulated in the front-end.
-
-
 # Infrastructure
-The infrastructure is hosted in Azure, using ML Studio. Deployments are automated using GitHub actions so that when the code for the model is modified, the model is re-trained and deployed to a realtime endpoint.
+The infrastructure is hosted in Azure, using ML Studio. Deployments are automated using GitHub Actions so that when changes are made to the model or user interface, they are
 
-<!-- TODO: Fill this out later with more details -->
+## Architecture Diagram
+![Architecture Diagram](docs/images/Architecture Diagram.drawio.svg)
+
+# Authors
+ - [Cian Mawhinney](https://github.com/cianmawhinney)
+ - [Dermot O'Brien](https://github.com/mangledbottles)
+ - [Emmet McDonald](https://github.com/EmmetMcD)
+ - [Kenneth Harmon](https://github.com/KennethHarmon)
+ - [Elliot Lyons](https://github.com/elliot-lyons)
+ - [Jacob Sharpe](https://github.com/j-wilsons)
+ - [Aj Pakulyte](https://github.com/pakulyta)
