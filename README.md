@@ -46,8 +46,11 @@ Number of files: 12047
 | Negative         | 1082 |
 
 ## Model Results
+These are the results of using different base models
+
 | # Name                                               | # Loss | # Accuracy | # Recall          | # Precision |
 |------------------------------------------------------|--------|------------|-------------------|-------------|
+| VGG contrast, zoom, translation and fine tuning      |        |            | 0.8151            | 0.89        |
 | VGG No Augmentation Fine Tuning                      | 0.3922 | 0.8393     | 0.6512            | 0.608       |
 | VGG with augmentation                                | 0.4554 | 0.7902     | 0? (not sure why) | 0           |
 | VGG no augmentation                                  | 0.3866 | 0.84       | 0.3936            | 0.7167      |
